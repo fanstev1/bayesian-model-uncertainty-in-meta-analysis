@@ -1,0 +1,20 @@
+# no R history
+.RHISTORY
+
+# no R image
+*.RData
+
+# no PDF
+*.pdf
+*.png
+*.tif
+*.tiff
+
+#no word
+*.doc
+*.docx
+
+# other files to ignore
+*.db
+*~
+*.log
