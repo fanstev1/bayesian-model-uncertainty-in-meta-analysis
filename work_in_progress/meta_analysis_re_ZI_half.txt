@@ -1,0 +1,26 @@
+model
+{
+    for (i in 1:nStudy) {
+        yi[i] ~ dnorm(theta[i], tau.y[i])
+        theta[i] <- mu.theta + lambda * b[i]
+        tau.y[i] <- 1/vi[i]
+    }
+    mu.theta ~ dnorm(0.00000E+00, 1.00000E-06)
+    lambda ~ dflat()
+    PI <- 3.14159265358979
+    loglik <- log(equals(lambda, 0.00000E+00) * (1 - p0) + (1 - 
+        equals(lambda, 0.00000E+00)) * (p0 * pow(2 * PI, -0.5) * 
+        pow(prior.scale, -1) * exp(-0.5 * pow(lambda/prior.scale, 
+        2))))
+    C <- 1.00000E+05
+    loglik.c <- -1 * loglik + C
+    dummy <- 0.00000E+00
+    dummy ~ dpois(loglik.c)
+    for (i in 1:nStudy) {
+        b[i] ~ dnorm(0.00000E+00, tau.b)
+    }
+    prior.scale.tau.b <- 0.5 * nStudy
+    tau.b ~ dgamma(0.5, prior.scale.tau.b)
+    sigma.theta <- abs(lambda)/sqrt(tau.b)
+    or.overall <- exp(mu.theta)
+}

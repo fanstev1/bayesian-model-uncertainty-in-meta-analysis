@@ -1,0 +1,17 @@
+model
+{
+    for (i in 1:nStudy) {
+        yi[i] ~ dnorm(theta[i], tau.y[i])
+        theta[i] <- mu.theta + lambda * b[i]
+        tau.y[i] <- 1/vi[i]
+    }
+    mu.theta ~ dnorm(0.00000E+00, 1.00000E-06)
+    lambda ~ dnorm(0.00000E+00, tau.lambda)
+    tau.lambda <- pow(prior.scale, -2)
+    for (i in 1:nStudy) {
+        b[i] ~ dnorm(0.00000E+00, tau.b)
+    }
+    tau.b ~ dgamma(0.5, 0.5)
+    sigma.theta <- abs(lambda)/sqrt(tau.b)
+    or.overall <- exp(mu.theta)
+}

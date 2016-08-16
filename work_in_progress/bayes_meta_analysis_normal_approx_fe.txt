@@ -1,0 +1,8 @@
+model
+{
+    for (i in 1:nStudy) {
+        y[i] ~ dnorm(delta, tau_y[i])
+    }
+    delta ~ dnorm(0.00000E+00, 1.00000E-06)
+    OR <- exp(delta)
+}

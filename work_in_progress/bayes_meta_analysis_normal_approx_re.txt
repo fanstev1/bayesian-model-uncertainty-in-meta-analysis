@@ -1,0 +1,17 @@
+model
+{
+    for (i in 1:nStudy) {
+        y[i] ~ dnorm(delta[i], tau_y[i])
+        delta[i] <- beta + lambda * b[i]
+        b[i] ~ dnorm(0.00000E+00, tau.b)
+    }
+    lambda ~ dnorm(0.00000E+00, tau.lambda)
+    tau.lambda <- pow(prior.scale, -2)
+    beta ~ dnorm(0.00000E+00, 1.00000E-06)
+    tau.b ~ dgamma(0.5, 0.5)
+    OR <- exp(beta)
+    sigma.study.effect <- abs(lambda)/sqrt(tau.b)
+    for (i in 1:nStudy) {
+        s[i] <- lambda * b[i]
+    }
+}

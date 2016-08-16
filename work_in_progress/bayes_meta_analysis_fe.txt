@@ -1,0 +1,12 @@
+model
+{
+    for (i in 1:nStudy) {
+        rc[i] ~ dbin(pc[i], nc[i])
+        rt[i] ~ dbin(pt[i], nt[i])
+        logit(pc[i]) <- mu[i]
+        mu[i] ~ dflat()
+        logit(pt[i]) <- mu[i] + tx.effect
+    }
+    tx.effect ~ dflat()
+    OR <- exp(tx.effect)
+}
